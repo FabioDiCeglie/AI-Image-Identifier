@@ -54,9 +54,14 @@ export default function Home() {
         setState((prevState) => ({
           ...prevState,
           isLoading: false,
-        })); // Hide loading after processing file
+        }));
       };
       reader.onerror = () => {
+        setState((prevState) => ({
+          ...prevState,
+          isLoading: false,
+          error: "Failed to read the file.",
+        }));
         toast({
           title: "File Read Error",
           description: "There was an error reading the selected file.",
@@ -64,10 +69,6 @@ export default function Home() {
         });
       };
       reader.readAsDataURL(file);
-        setState((prevState) => ({
-          ...prevState,
-          error: "Failed to read the file.",
-        }));
     }
   };
 
@@ -219,7 +220,7 @@ export default function Home() {
               accept="image/png, image/jpeg, image/gif"
               onChange={handleFileChange}
               ref={fileInputRef}
-              className="hidden" // Hide the default input
+              className="hidden"
             />
           </div>
 
